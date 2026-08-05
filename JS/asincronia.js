@@ -40,3 +40,59 @@ setTimeout(() => {
 }, 3000);
 
 console.log("El usuario pude seguir navegando");
+
+// function obtenerAlumnos(){
+//     return new Promise((resolve) => {
+//         setTimeout(() => {
+//             console.log("Alumnos cargados");
+//             resolve(["Ana", "Juan", "Pedro"]);
+//         }, 3000);
+//     });
+// }
+obteneralumno().then((alumnos) => {
+   console.log(alumnos)
+})
+
+async function iniciar() {
+    const alumnos = await obteneralumno()
+    console.log(alumnos)
+    
+}
+iniciar()
+
+function obtenerClima(){
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            console.log("Clima cargado");
+            resolve({ temperatura: 25, condiciones: "Soleado" });
+        }, 3000);
+    });
+}
+
+// con then()
+obtenerClima().then((clima) => {
+    console.log(clima);
+});
+
+// con async/await
+async function iniciarClima(){
+    const clima = await obtenerClima();
+    console.log(clima);
+}
+
+iniciarClima();
+
+async function mostrarSaldo(){
+    const saldo = await obtenerSaldo();
+    console.log("Su saldo es: ${saldo}");
+}
+
+mostrarSaldo();
+
+function iniciarSecion(){
+    return new Promise(resolve => {
+        setTimeout(() => {
+            resolve("Sesion iniciada");
+        }, 3000);
+    });
+}
