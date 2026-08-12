@@ -1,139 +1,105 @@
-const alumnos = [
-    { id: 1, nombre: "Juan", carrera: "Ingeniería", correo: "juan@mail.com" },
-    { id: 2, nombre: "María", carrera: "Sistemas", correo: "maria@mail.com" },
-    { id: 3, nombre: "Pedro", carrera: "Contador", correo: "pedro@mail.com" }
-];
+const formulario = document.querySelector("#formAlumno")
+const mensaje = document.querySelector("#mensaje")
+const listaAlumnos = document.querySelector("#listaAlumnos")
+const cantidadAlumnos = document.querySelector("#cantidadAlumnos")
+let alumnoEditandoId = null
 
-const materias = [
-    { id: 1, nombre: "Matemáticas" },
-    { id: 2, nombre: "Ciencias" },
-    { id: 3, nombre: "Historia" }
-];
+formulario.addEventListener("submit", function (event) {
+    event.preventDefault();
 
-const docentes = [
-    { id: 1, nombre: "Dr. García" },
-    { id: 2, nombre: "Lic. Rodríguez" },
-    { id: 3, nombre: "Ing. López" }
-];
+    const nombre = document.querySelector("#nombre").value
+    const carrera = document.querySelector("#carrera").value
+    const correo = document.querySelector("#correo").value
 
-let nextId = alumnos.length + 1;
-let idEditando = null;
+    const alumnos = obtenerAlumnos()
+
+    if (alumnoEditandoId !== null) {
+        const alumno = alumnos.find(a => a.id === alumnoEditandoId)
+        alumno.nombre = nombre
+        alumno.carrera = carrera
+        alumno.correo = correo
+        alumnoEditandoId = null
+        mostrarMensaje("Alumno editado correctamente")
+    } else {
+        const alumno = {
+            id: Date.now(),
+            nombre: nombre,
+            carrera: carrera,
+            correo: correo
+        }
+        alumnos.push(alumno)
+        mostrarMensaje("Alumno guardado correctamente")
+    }
+
+    localStorage.setItem("alumnos", JSON.stringify(alumnos))
+    mostraAlumnos(alumnos)
+    formulario.reset()
+});
 
 function obtenerAlumnos() {
-    return new Promise(resolve => {
-        setTimeout(() => {
-            resolve(alumnos);
-        }, 1000);
-    });
+    const datos = localStorage.getItem("alumnos")
+    if (datos) {
+        return JSON.parse(datos)
+    }
+    return []
 }
 
-function obtenerMaterias() {
-    return new Promise(resolve => {
-        setTimeout(() => {
-            resolve(materias);
-        }, 1000);
-    });
+function mostrarMensaje(texto) {
+    mensaje.textContent = texto;
+    setTimeout(() => {
+        mensaje.textContent = " ";
+    }, 3000);
 }
 
-function obtenerDocentes() {
-    return new Promise(resolve => {
-        setTimeout(() => {
-            resolve(docentes);
-        }, 1000);
-    });
-}
-
-async function mostrarMaterias() {
-    const datos = await obtenerMaterias();
-    console.table(datos);
-}
-
-async function mostrarDocentes() {
-    const datos = await obtenerDocentes();
-    console.table(datos);
-}
-
-function renderizarAlumnos(lista) {
-    const tbody = document.getElementById("listaAlumnos");
-    tbody.innerHTML = "";
-
-    lista.forEach(a => {
-        const fila = document.createElement("tr");
-        fila.innerHTML = `
-            <td>${a.id}</td>
-            <td>${a.nombre}</td>
-            <td>${a.carrera}</td>
-            <td>${a.correo}</td>
+function mostraAlumnos(alumnos) {
+    listaAlumnos.innerHTML = ""
+    for (const alumno of alumnos) {
+        listaAlumnos.innerHTML += `
+        <tr>
+            <td>${alumno.id}</td>
+            <td>${alumno.nombre}</td>
+            <td>${alumno.carrera}</td>
+            <td>${alumno.correo}</td>
             <td>
-                <button type="button" onclick="editarAlumno(${a.id})">Editar</button>
-                <button type="button" onclick="eliminarAlumno(${a.id})">Eliminar</button>
+                <button class="btn-editar" data-id="${alumno.id}">Editar</button>
+                <button class="btn-eliminar" data-id="${alumno.id}">Eliminar</button>
             </td>
+        </tr>
         `;
-        tbody.appendChild(fila);
-    });
-
-    document.getElementById("cantidadAlumnos").textContent = `Total de alumnos: ${lista.length}`;
+    }
+    cantidadAlumnos.textContent = `Total de alumnos: ${alumnos.length}`
 }
 
 function eliminarAlumno(id) {
-    const index = alumnos.findIndex(a => a.id === id);
-    if (index !== -1) {
-        const nombre = alumnos[index].nombre;
-        alumnos.splice(index, 1);
-        renderizarAlumnos(alumnos);
-        mostrarMensaje(`Alumno ${nombre} eliminado correctamente`, "ok");
-    }
-}
-
-function mostrarMensaje(texto, tipo) {
-    const mensaje = document.getElementById("mensaje");
-    mensaje.textContent = texto;
-    mensaje.style.color = tipo === "error" ? "red" : "green";
+    const alumnos = obtenerAlumnos()
+    const alumnosActualizados = alumnos.filter(
+        alumno => alumno.id !== id
+    );
+    localStorage.setItem("alumnos", JSON.stringify(alumnosActualizados))
+    mostraAlumnos(alumnosActualizados)
+    mostrarMensaje("Alumno eliminado correctamente")
 }
 
 function editarAlumno(id) {
-    const alumno = alumnos.find(a => a.id === id);
-    if (!alumno) return;
-
-    document.getElementById("nombre").value = alumno.nombre;
-    document.getElementById("carrera").value = alumno.carrera;
-    document.getElementById("correo").value = alumno.correo;
-
-    idEditando = id;
-    document.querySelector("#formAlumno button[type='submit']").textContent = "Guardar cambios";
+    const alumnos = obtenerAlumnos()
+    const alumno = alumnos.find(alumno => alumno.id === id)
+    document.querySelector("#nombre").value = alumno.nombre;
+    document.querySelector("#carrera").value = alumno.carrera;
+    document.querySelector("#correo").value = alumno.correo;
+    alumnoEditandoId = id;
 }
 
-document.getElementById("formAlumno").addEventListener("submit", (e) => {
-    e.preventDefault();
-    try {
-        const nombre = document.getElementById("nombre").value.trim();
-        const carrera = document.getElementById("carrera").value.trim();
-        const correo = document.getElementById("correo").value.trim();
-
-        if (!nombre || !carrera || !correo) {
-            throw new Error("Todos los campos son obligatorios");
-        }
-
-        if (idEditando !== null) {
-            const alumno = alumnos.find(a => a.id === idEditando);
-            alumno.nombre = nombre;
-            alumno.carrera = carrera;
-            alumno.correo = correo;
-            idEditando = null;
-            document.querySelector("#formAlumno button[type='submit']").textContent = "Guardar alumno";
-            mostrarMensaje("Alumno editado correctamente", "ok");
-        } else {
-            alumnos.push({ id: nextId++, nombre, carrera, correo });
-            mostrarMensaje("Alumno agregado correctamente", "ok");
-        }
-        renderizarAlumnos(alumnos);
-        e.target.reset();
-    } catch (error) {
-        mostrarMensaje(error.message, "error");
+listaAlumnos.addEventListener("click", (e) => {
+    if (e.target.classList.contains("btn-eliminar")) {
+        const id = Number(e.target.dataset.id)
+        eliminarAlumno(id)
     }
-});
+    if (e.target.classList.contains("btn-editar")) {
+        const id = Number(e.target.dataset.id)
+        editarAlumno(id)
+    }
+})
 
-document.addEventListener("DOMContentLoaded", async () => {
-    const datos = await obtenerAlumnos();
-    renderizarAlumnos(datos);
-});
+document.addEventListener("DOMContentLoaded", () => {
+    mostraAlumnos(obtenerAlumnos())
+})
