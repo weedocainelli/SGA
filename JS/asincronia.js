@@ -1,39 +1,3 @@
-// console.log("Inicio");
-
-// setTimeout(() => {
-//     console.log("Buscando alumno...");
-// }, 3000);
-
-// console.log("Fin");
-
-// function saludar(){
-//     console.log("Hola");
-// }
-
-// function ejecutar(funcion){
-//     funcion();
-// }
-
-// ejecutar(saludar);
-
-// function despedirse(){
-//     console.log("Adiós");
-// }
-
-// setTimeout(despedirse, 3000);
-
-// setTimeout(() => {
-//     console.log("Buscando docentes...");
-// }, 3000);
-
-// setTimeout(() => {
-//     console.log("Buscando materias...");
-// }, 4000);
-
-// setTimeout(() => {
-//     console.log("Buscando cursos...");
-// }, 4000);
-
 console.log("Abriendo Sistema de Gestion Academica");
 setTimeout(() => {
     console.log("Alumnos Cargados");
@@ -41,26 +5,26 @@ setTimeout(() => {
 
 console.log("El usuario pude seguir navegando");
 
-// function obtenerAlumnos(){
-//     return new Promise((resolve) => {
-//         setTimeout(() => {
-//             console.log("Alumnos cargados");
-//             resolve(["Ana", "Juan", "Pedro"]);
-//         }, 3000);
-//     });
-// }
-obteneralumno().then((alumnos) => {
-   console.log(alumnos)
-})
+function obtenerAlumnosDemo() {
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            console.log("Alumnos cargados");
+            resolve(["Ana", "Juan", "Pedro"]);
+        }, 3000);
+    });
+}
+
+obtenerAlumnosDemo().then((alumnos) => {
+    console.log(alumnos);
+});
 
 async function iniciar() {
-    const alumnos = await obteneralumno()
-    console.log(alumnos)
-    
+    const alumnos = await obtenerAlumnosDemo();
+    console.log(alumnos);
 }
-iniciar()
+iniciar();
 
-function obtenerClima(){
+function obtenerClima() {
     return new Promise((resolve) => {
         setTimeout(() => {
             console.log("Clima cargado");
@@ -75,21 +39,27 @@ obtenerClima().then((clima) => {
 });
 
 // con async/await
-async function iniciarClima(){
+async function iniciarClima() {
     const clima = await obtenerClima();
     console.log(clima);
 }
-
 iniciarClima();
 
-async function mostrarSaldo(){
-    const saldo = await obtenerSaldo();
-    console.log("Su saldo es: ${saldo}");
+function obtenerSaldo() {
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            resolve(15000);
+        }, 3000);
+    });
 }
 
+async function mostrarSaldo() {
+    const saldo = await obtenerSaldo();
+    console.log(`Su saldo es: ${saldo}`);
+}
 mostrarSaldo();
 
-function iniciarSecion(){
+function iniciarSesion() {
     return new Promise(resolve => {
         setTimeout(() => {
             resolve("Sesion iniciada");
