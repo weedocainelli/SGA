@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <title>SGA - Docentes</title>
+    <script src="js/docentes.js" defer></script>
+</head>
+
+<body>
+    <header>
+        <nav>
+            <a href="index.html">Inicio</a>
+            <a href="alumnos.html">Alumnos</a>
+            <a href="docentes.html">Docentes</a>
+        </nav>
+    </header>
+    <main>
+        <section class="contenedor">
+            <h2>Alta de docente</h2>
+            <form id="formDocente">
+                <label for="nombre">Nombre</label>
+                <input type="text" id="nombre"><br><br>
+
+                <label for="materia">Materia</label>
+                <input type="text" id="materia"><br><br>
+
+                <label for="correo">Correo electrónico</label>
+                <input type="email" id="correo"><br><br>
+
+                <button type="submit">Guardar docente</button>
+            </form>
+            <p id="mensaje"></p>
+        </section>
+        <section class="contenedor">
+            <h2>Docentes registrados</h2>
+            <p id="cantidadDocentes"></p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Materia</th>
+                        <th>Correo</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="listaDocentes"></tbody>
+            </table>
+        </section>
+    </main>
+</body>
+
+</html>

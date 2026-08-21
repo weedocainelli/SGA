@@ -2,50 +2,41 @@
 <html lang="es">
 
 <head>
-    <title></title>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script src="JS/alumnos.js" defer></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <title>SGA</title>
 </head>
 
 <body>
     <header>
-        <h1>Sistema de Gestion Academica</h1>
+        <nav>
+            <a href="index.html">Inicio</a>
+            <a href="alumnos.html">Alumnos</a>
+            <a href="docentes.html">Docentes</a>
+        </nav>
     </header>
-    <main>
-        <section class="contenedor">
-            <h2>Alta de alumno</h2>
-            <form id="formAlumno">
-
-                <label for="nombre">Nombre</label>
-                <input type="text" id="nombre"><br><br>
-
-                <label for="carrera">Carrera</label>
-                <input type="text" id="carrera"><br><br>
-
-                <label for="correo">Correo electrónico</label>
-                <input type="email" id="correo"><br><br>
-
-                <button type="submit">Guardar alumno</button>
-            </form>
+    <main class="inicio">
+        <h1>Sistema de Gestión Académica</h1>
+        <p>Bienvenido al Sistema de Gestión Académica</p>
+        <section class="modulos">
+            <a href="alumnos.html" class="tarjeta">
+                <i class="fa-solid fa-users"></i>
+                <h2>Alumnos</h2>
+                <p>Gestionar alumnos</p>
+            </a>
+            <a href="docentes.html" class="tarjeta">
+                <i class="fa-solid fa-chalkboard-user"></i>
+                <h2>Docentes</h2>
+                <p>Gestionar docentes</p>
+            </a>
+            <div class="tarjeta tarjeta-deshabilitada">
+                <i class="fa-solid fa-book"></i>
+                <h2>Materias</h2>
+                <p>Próximamente</p>
+            </div>
         </section>
-        <p id="mensaje"></p>
-        <h2>Lista de alumnos</h2>
-        <p id="cantidadAlumnos"></p>
-        <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Nombre</th>
-                    <th>Carrera</th>
-                    <th>Correo</th>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
-            <tbody id="listaAlumnos"></tbody>
-        </table>
-        <ul id="listaAlumnos"></ul>
     </main>
 </body>
 

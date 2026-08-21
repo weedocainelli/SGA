@@ -71,3 +71,46 @@ th {
     background-color: grey;
     color: white;
 }
+
+nav a {
+    color: white;
+    text-decoration: none;
+    margin: 0 15px;
+    font-weight: bold;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+main.inicio {
+    text-align: center;
+}
+
+.modulos {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 30px;
+}
+
+.tarjeta {
+    background-color: white;
+    padding: 25px;
+    border-radius: 8px;
+    width: 200px;
+    text-decoration: none;
+    color: #1f2937;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.tarjeta i {
+    font-size: 2rem;
+    margin-bottom: 10px;
+}
+
+.tarjeta-deshabilitada {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
