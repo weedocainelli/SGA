@@ -64,7 +64,7 @@ formulario.addEventListener("submit", function (event) {
     }
 
     guardarDatos("alumnos", alumnos)
-    mostraAlumnos(alumnos)
+    mostrarAlumnos(alumnos)
     formulario.reset()
 });
 
@@ -72,7 +72,7 @@ function obtenerAlumnos() {
     return obtenerDatos("alumnos")
 }
 
-function mostraAlumnos(alumnos) {
+function mostrarAlumnos(alumnos) {
     listaAlumnos.innerHTML = ""
     for (const alumno of alumnos) {
         listaAlumnos.innerHTML += `
@@ -106,7 +106,7 @@ function eliminarAlumno(id) {
         alumno => alumno.id !== id
     );
     localStorage.setItem("alumnos", JSON.stringify(alumnosActualizados))
-    mostraAlumnos(alumnosActualizados)
+    mostrarAlumnos(alumnosActualizados)
     if (alumnoEditandoId === id) {
         formulario.reset()
         alumnoEditandoId = null
@@ -162,4 +162,4 @@ function cancelarEdicion() {
 btnCancelar.addEventListener("click", cancelarEdicion)
 
 const alumnos = obtenerAlumnos()
-mostraAlumnos(alumnos)
+mostrarAlumnos(alumnos)
