@@ -3,14 +3,17 @@ const app = express()
 app.use(express.json())
 const alumnosRoutes = require("./routes/alumnos.routes")
 app.use("/alumnos", alumnosRoutes)
+const conectarBD = require("./config/database")
+
+conectarBD()
 
 
 // Creo un middleware
-app.use((req, res, next) => {
-    console.log(req.method)
-    console.log(req.url)
-    next()
-})
+// app.use((req, res, next) => {
+//     console.log(req.method)
+//     console.log(req.url)
+//     next()
+// })
 
 
 
