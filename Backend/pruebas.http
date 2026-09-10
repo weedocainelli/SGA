@@ -1,0 +1,64 @@
+GET http://localhost:3000/alumnos
+
+###
+
+GET http://localhost:3000/alumnos/2
+
+###
+
+GET http://localhost:3000/alumnos/99
+
+###
+
+POST http://localhost:3000/alumnos
+Content-Type: application/json
+
+{
+    "legajo": 1002,
+    "nombre": "Lucía",
+    "carrera": "Ingenieria en Sistemas",
+    "correo": "lucia@gmail.com"
+}
+
+###
+
+POST http://localhost:3000/alumnos/
+Content-Type: application/json
+
+{
+    "legajo": 1001,
+    "nombre": "Juan Pérez",
+    "carrera": "Programación",
+    "correo": "juanperez@gmail.com"
+}
+
+###
+
+PUT http://localhost:3000/alumnos/1001
+Content-Type: application/json
+
+{
+    "legajo": 1001,
+    "nombre": "Juan Perez",
+    "carrera": "Programación",
+    "correo": "Juanperez@gmail.com"
+}
+
+###
+
+PUT http://localhost:3000/alumnos/99
+Content-Type: application/json
+
+{
+    "id": 99,
+    "nombre": "Alumno inexistente",
+    "carrera": "Programación"
+}
+
+###
+
+DELETE http://localhost:3000/alumnos/1003
+
+###
+
+DELETE http://localhost:3000/alumnos/99
