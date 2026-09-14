@@ -14,10 +14,10 @@ POST http://localhost:3000/alumnos
 Content-Type: application/json
 
 {
-    "legajo": 1002,
-    "nombre": "Lucía",
-    "carrera": "Ingenieria en Sistemas",
-    "correo": "lucia@gmail.com"
+    "legajo": 1004,
+    "nombre": "Susana",
+    "carrera": "Arquitectura",
+    "correo": "susana10@gmail.com"
 }
 
 ###

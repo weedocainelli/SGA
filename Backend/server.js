@@ -4,8 +4,14 @@ app.use(express.json())
 const alumnosRoutes = require("./routes/alumnos.routes")
 app.use("/alumnos", alumnosRoutes)
 const conectarBD = require("./config/database")
+require("dotenv").config()
+const PORT = process.env.PORT
 
 conectarBD()
+
+app.listen(PORT, () => {
+    console.log(`Servidor funcionando en http://localhost:${PORT}`)
+})
 
 
 // Creo un middleware
@@ -17,6 +23,3 @@ conectarBD()
 
 
 
-app.listen(3000, () => {
-    console.log("Servidor funcionando en http://localhost:3000")
-})
