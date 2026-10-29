@@ -142,6 +142,10 @@ th {
     background-color: #16a34a;
 }
 
+.mje-adv {
+    background-color: #f1bd63;
+}
+
 .btn-editar, .btn-eliminar {
     border: none;
     padding: 8px 10px;
@@ -220,10 +224,6 @@ th {
 .tarjeta-deshabilitada:hover {
     transform: none;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-}
-
-.mje-adv {
-    background-color: #f1bd63;
 }
 
 .acciones-form {

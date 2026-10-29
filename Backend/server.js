@@ -1,15 +1,26 @@
-const express = require("express")
-const app = express()
-app.use(express.json())
-const alumnosRoutes = require("./routes/alumnos.routes")
-app.use("/alumnos", alumnosRoutes)
-const conectarBD = require("./config/database")
-require("dotenv").config()
-const PORT = process.env.PORT
+require("dotenv").config() 
 
-conectarBD()
+const express = require("express") 
+const cors = require("cors")
 
-app.listen(PORT, () => {
+const conectarDB = require("./config/database")
+const alumnosRoutes = require("./routes/alumnos.routes") 
+const docentesRoutes = require("./routes/docentes.routes")
+
+const app = express() 
+
+app.use(express.json()) 
+app.use(cors()) 
+app.use("/alumnos", alumnosRoutes) 
+app.use("/docentes", docentesRoutes)
+
+const PORT = process.env.PORT 
+
+conectarDB() 
+
+console.log("Ejecutado con nodemon")
+
+app.listen(PORT, () => { 
     console.log(`Servidor funcionando en http://localhost:${PORT}`)
 })
 
@@ -20,6 +31,3 @@ app.listen(PORT, () => {
 //     console.log(req.url)
 //     next()
 // })
-
-
-

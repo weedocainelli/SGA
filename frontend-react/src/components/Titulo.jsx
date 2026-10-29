@@ -1,7 +1,8 @@
-function Titulo({ texto, color }) {
+function Titulo({texto, color}){
+    // Las props personalizan el contenido y el color del título.
     return (
-        <h1 style={{ color }}>{texto}</h1>
+        <h1 style={{color}}>{texto}</h1>
     )
 }
 
-export default Titulo;
+export default Titulo

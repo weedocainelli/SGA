@@ -1,64 +1,59 @@
 GET http://localhost:3000/alumnos
 
 ###
-
-GET http://localhost:3000/alumnos/2
-
-###
-
-GET http://localhost:3000/alumnos/99
+GET http://localhost:3000/alumnos/1002
 
 ###
-
 POST http://localhost:3000/alumnos
 Content-Type: application/json
 
 {
-    "legajo": 1004,
-    "nombre": "Susana",
-    "carrera": "Arquitectura",
-    "correo": "susana10@gmail.com"
+    "legajo": 1023,
+    "nombre": "Ramón",
+    "carrera": "Sistemas",
+    "correo": "ramon@mail.com"
 }
-
 ###
-
-POST http://localhost:3000/alumnos/
+PUT http://localhost:3000/alumnos/1002
 Content-Type: application/json
 
 {
-    "legajo": 1001,
-    "nombre": "Juan Pérez",
+    "nombre": "Juan Carlos",
     "carrera": "Programación",
-    "correo": "juanperez@gmail.com"
+    "correo": "juan@mail.com"
 }
 
 ###
-
-PUT http://localhost:3000/alumnos/1001
-Content-Type: application/json
-
-{
-    "legajo": 1001,
-    "nombre": "Juan Perez",
-    "carrera": "Programación",
-    "correo": "Juanperez@gmail.com"
-}
+DELETE http://localhost:3000/alumnos/1021
 
 ###
-
-PUT http://localhost:3000/alumnos/99
+POST http://localhost:3000/alumnos
 Content-Type: application/json
 
 {
-    "id": 99,
-    "nombre": "Alumno inexistente",
+    "id": 5,
+    "nombre": "Rocío",
     "carrera": "Programación"
 }
 
 ###
 
-DELETE http://localhost:3000/alumnos/1003
+GET http://localhost:3000/docentes
 
 ###
 
-DELETE http://localhost:3000/alumnos/99
+POST http://localhost:3000/docentes
+Content-Type: application/json
+
+{
+  "dni": 42388657,
+  "nombre": "Ana Luz",
+  "especialidad": "Sistemas",
+  "correo": "ana23@mail.com"
+},
+{
+  "dni": 49788657,
+  "nombre": "Juan",
+  "especialidad": "Ingenieria",
+  "correo": "juan@mail.com"
+}

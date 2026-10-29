@@ -1,9 +1,10 @@
-export function Navbar() {
+export function Navbar(){
     return (
-        <nav aria-label="Navegación principal">
-            <a href="#inicio">Inicio</a>
-            {' | '}
-            <a href="#alumnos">Alumnos</a>
+        <nav>
+            <a href="#">Inicio</a> |
+            <a href="#">Alumnos</a>
         </nav>
     )
 }
+
+// export default Navbar

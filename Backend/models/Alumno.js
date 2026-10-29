@@ -1,14 +1,19 @@
-const mongoose = require("mongoose")
+const mongoose = require("mongoose") 
 
-const AlumnoSchema = new mongoose.Schema({
-    legajo: {type: Number, unique: true},
-    nombre: {type: String, required: true},
-    carrera: {type: String, required: true},
-    correo: {type: String, required: true}
+const alumnoSchema = new mongoose.Schema({ 
+    legajo: {
+        type: Number,
+        unique: true 
+    },
+    nombre: String,
+    carrera: String,
+    correo: String
 },
-{
-    versionKey: false // Evita que se genere el campo __v
-})
+{ 
+    versionKey: false 
+}
+)
 
-const Alumno = mongoose.model("Alumno", AlumnoSchema)
-module.exports = Alumno
+const Alumno = mongoose.model("Alumno", alumnoSchema) 
+
+module.exports = Alumno 

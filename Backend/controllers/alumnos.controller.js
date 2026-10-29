@@ -1,75 +1,79 @@
-const Alumno = require('../models/alumno')
+const Alumno = require("../models/Alumno") 
 
-async function obtenerAlumnos(req, res){
+async function obtenerAlumnos(req, res) { 
     const alumnos = await Alumno.find()
-    res.json(alumnos)
+    res.json(alumnos) 
 }
 
 async function obtenerAlumno(req, res) {
-    const alumno = await Alumno.findOne({ legajo: Number(req.params.id) })
-    if (!alumno) {
+    const alumno = await Alumno.findOne({ 
+        legajo: Number(req.params.id)
+    }) 
+    if (!alumno) { 
         return res.status(404).json({
             mensaje: "Alumno no encontrado"
         })
     }
-    res.json(alumno)
+    res.json(alumno) 
 }
 
 async function crearAlumno(req, res) {
     const { legajo, nombre, carrera, correo } = req.body
+    const legajoNormalizado = Number(legajo)
+    const nombreLimpio = typeof nombre === "string" ? nombre.trim() : ""
+    const carreraLimpia = typeof carrera === "string" ? carrera.trim() : ""
+    const correoLimpio = typeof correo === "string" ? correo.trim() : ""
 
-    if (legajo === undefined || !nombre || !carrera || !correo) {
+    if (!legajo || !nombre || !carrera || !correo) {
         return res.status(400).json({
             mensaje: "Todos los campos son obligatorios"
         })
     }
 
-    if (typeof nombre !== "string" || typeof carrera !== "string" || typeof correo !== "string") {
-        return res.status(400).json({
-            mensaje: "Nombre, carrera y correo deben ser textos"
-        })
-    }
-
-    const legajoNumero = Number(legajo)
-    if (Number.isNaN(legajoNumero) || legajoNumero <= 0) {
+    if (!Number.isInteger(legajoNormalizado) || legajoNormalizado <= 0) {
         return res.status(400).json({
             mensaje: "El legajo debe ser un número válido"
         })
     }
 
-    if(typeof legajo !== "number") {
+    if (!nombreLimpio || nombreLimpio.length < 3) {
         return res.status(400).json({
-            mensaje: "El legajo debe ser un número"
+            mensaje: "El nombre debe tener al menos 3 caracteres"
         })
     }
-    
-    const existe = await Alumno.findOne({ 
-        legajo
+
+    if (!carreraLimpia || !correoLimpio || !correoLimpio.includes("@")) {
+        return res.status(400).json({
+            mensaje: "La carrera y el correo son obligatorios y el correo debe ser válido"
+        })
+    }
+
+    const existe = await Alumno.findOne({
+        legajo: legajoNormalizado
     })
     if (existe) {
         return res.status(400).json({
-            mensaje: "Ya existe un alumno con ese legajo"
+            mensaje: "El legajo ya existe"
         })
     }
     const nuevoAlumno = await Alumno.create({
-        legajo: legajoNumero,
-        nombre: nombre.trim(),
-        carrera: carrera.trim(),
-        correo: correo.trim()
+        legajo: legajoNormalizado,
+        nombre: nombreLimpio,
+        carrera: carreraLimpia,
+        correo: correoLimpio
     })
-
     res.status(201).json(nuevoAlumno)
 }
 
 async function actualizarAlumno(req, res) {
-    const {nombre, carrera, correo} = req.body
-    const alumno = await Alumno.findOneAndUpdate(
-        {legajo: Number(req.params.id)},
-        {nombre, carrera, correo},
-        { returnDocument: "after"}
+    const { nombre, carrera, correo } = req.body
+    const alumno = await Alumno.findOneAndUpdate( 
+        { legajo: Number(req.params.id) }, 
+        { nombre, carrera, correo }, 
+        { returnDocument: "after" } 
     )
-    if (!alumno){
-      return  res.status(404).json({
+    if (!alumno) {
+        return res.status(404).json({
             mensaje: "Alumno no econtrado"
         })
     }
@@ -78,19 +82,22 @@ async function actualizarAlumno(req, res) {
 }
 
 async function eliminarAlumno(req, res) {
-    const alumno = await Alumno.findOneAndDelete({ legajo: Number(req.params.id) })
-
+    const alumno = await Alumno.findOneAndDelete( 
+        { legajo: Number(req.params.id) } 
+    )
     if (!alumno) {
         return res.status(404).json({
-            mensaje: "Alumno no encontrado"
+            mensaje: "Alumno no econtrado"
         })
     }
 
     res.json({ mensaje: "Alumno eliminado correctamente" })
 }
 
-module.exports = { obtenerAlumnos, 
-    obtenerAlumno, 
-    crearAlumno, 
+module.exports = {
+    obtenerAlumnos,
+    obtenerAlumno,
+    crearAlumno,
     actualizarAlumno,
-    eliminarAlumno }
+    eliminarAlumno
+} 
