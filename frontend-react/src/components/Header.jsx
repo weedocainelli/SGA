@@ -1,28 +1,69 @@
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom"
+import AppBar from "@mui/material/AppBar"
+import Toolbar from "@mui/material/Toolbar"
+import Typography from "@mui/material/Typography"
+import Button from "@mui/material/Button"
+import IconButton from "@mui/material/IconButton"
+import Box from "@mui/material/Box"
+import HelpOutlineRoundedIcon from "@mui/icons-material/HelpOutlineRounded"
+import logo from "../assets/sga-logo.svg"
+
+const enlaces = [
+    { to: "/alumnos", texto: "Alumnos" },
+    { to: "/docentes", texto: "Docentes" },
+    { to: "/materias", texto: "Materias" },
+]
 
 export default function Header() {
-    // Fragment agrupa header y nav sin crear un div adicional en el HTML.
     return (
-        <>
-        {/* Header se muestra en todas las rutas porque forma parte de Layout en App.jsx. */}
-        <header>
-            <h2>SGA</h2>
-        </header>
-        <nav>
-        {/* Link cambia de ruta con React Router sin recargar el documento HTML. */}
-        {/* El atributo to indica el destino; no es el href de un enlace HTML normal. */}
-        <Link to="/">Inicio</Link>
-        {/* Las llaves permiten insertar texto de JavaScript entre elementos JSX. */}
-        {" | "}
-        <Link to="/alumnos">Alumnos</Link>
-        {" | "}
-        <Link to="/docentes">Docentes</Link>
-        {" | "}
-        {/* aria-label da un nombre accesible al enlace que solo muestra un icono. */}
-        <Link to="/ayuda" aria-label="Ayuda">
-        ❔
-        </Link>
-        </nav>
-        </>
+        <AppBar
+            position="static"
+            color="inherit"
+            elevation={0}
+            sx={{ borderBottom: 1, borderColor: "divider", bgcolor: "background.paper" }}
+        >
+            <Toolbar
+                sx={{
+                    width: "min(100% - 2rem, 960px)",
+                    mx: "auto",
+                    px: "0 !important",
+                    py: 1,
+                    gap: 2,
+                    flexWrap: "wrap",
+                }}
+            >
+                <Box
+                    component={NavLink}
+                    to="/"
+                    sx={{ display: "flex", alignItems: "center", gap: 1.5, mr: "auto", color: "text.primary", textDecoration: "none" }}
+                >
+                    <Box component="img" src={logo} alt="" sx={{ width: 40, height: 40 }} />
+                    <Box>
+                        <Typography variant="h6" component="span" sx={{ display: "block", fontWeight: 800, lineHeight: 1.1 }}>
+                            SGA
+                        </Typography>
+                        <Typography variant="caption" color="text.secondary">
+                            Sistema de Gestión Académica
+                        </Typography>
+                    </Box>
+                </Box>
+                <Box component="nav" sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
+                    {enlaces.map(enlace => (
+                        <Button
+                            key={enlace.to}
+                            component={NavLink}
+                            to={enlace.to}
+                            color="inherit"
+                            sx={{ "&.active": { color: "primary.main", bgcolor: "action.selected" } }}
+                        >
+                            {enlace.texto}
+                        </Button>
+                    ))}
+                    <IconButton component={NavLink} to="/ayuda" aria-label="Ayuda" color="primary">
+                        <HelpOutlineRoundedIcon />
+                    </IconButton>
+                </Box>
+            </Toolbar>
+        </AppBar>
     )
 }

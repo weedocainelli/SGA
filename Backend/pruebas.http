@@ -57,3 +57,185 @@ Content-Type: application/json
   "especialidad": "Ingenieria",
   "correo": "juan@mail.com"
 }
+### ===== MATERIAS =====
+
+### 1. Listar materias (colección vacía)
+GET http://localhost:3000/materias
+
+### 2. Registrar varias materias
+POST http://localhost:3000/materias
+Content-Type: application/json
+
+{
+    "codigo": "PRG1",
+    "nombre": "Programación I",
+    "descripcion": "Fundamentos de programación",
+    "cargaHoraria": 96,
+    "estado": "activa"
+}
+
+###
+POST http://localhost:3000/materias
+Content-Type: application/json
+
+{
+    "codigo": "PRG4",
+    "nombre": "Programación IV",
+    "descripcion": "Desarrollo web con React y Node",
+    "cargaHoraria": 128,
+    "estado": "activa"
+}
+
+###
+POST http://localhost:3000/materias
+Content-Type: application/json
+
+{
+    "codigo": "BD1",
+    "nombre": "Base de Datos I",
+    "cargaHoraria": 64,
+    "estado": "inactiva"
+}
+
+### 3. Consultar una materia por código
+GET http://localhost:3000/materias/PRG4
+
+### 4. Consultar un código inexistente
+GET http://localhost:3000/materias/XYZ9
+
+### 6. Registrar sin código
+POST http://localhost:3000/materias
+Content-Type: application/json
+
+{
+    "nombre": "Matemática",
+    "cargaHoraria": 64,
+    "estado": "activa"
+}
+
+### 7. Registrar sin nombre
+POST http://localhost:3000/materias
+Content-Type: application/json
+
+{
+    "codigo": "MAT1",
+    "nombre": "   ",
+    "cargaHoraria": 64,
+    "estado": "activa"
+}
+
+### 8. Registrar sin carga horaria
+POST http://localhost:3000/materias
+Content-Type: application/json
+
+{
+    "codigo": "MAT1",
+    "nombre": "Matemática",
+    "estado": "activa"
+}
+
+### 9a. Carga horaria igual a cero
+POST http://localhost:3000/materias
+Content-Type: application/json
+
+{
+    "codigo": "MAT1",
+    "nombre": "Matemática",
+    "cargaHoraria": 0,
+    "estado": "activa"
+}
+
+### 9b. Carga horaria negativa
+POST http://localhost:3000/materias
+Content-Type: application/json
+
+{
+    "codigo": "MAT1",
+    "nombre": "Matemática",
+    "cargaHoraria": -10,
+    "estado": "activa"
+}
+
+### 9c. Carga horaria decimal
+POST http://localhost:3000/materias
+Content-Type: application/json
+
+{
+    "codigo": "MAT1",
+    "nombre": "Matemática",
+    "cargaHoraria": 12.5,
+    "estado": "activa"
+}
+
+### 10. Código duplicado
+POST http://localhost:3000/materias
+Content-Type: application/json
+
+{
+    "codigo": "PRG1",
+    "nombre": "Otra materia",
+    "cargaHoraria": 64,
+    "estado": "activa"
+}
+
+### 11. Estado no permitido
+POST http://localhost:3000/materias
+Content-Type: application/json
+
+{
+    "codigo": "MAT1",
+    "nombre": "Matemática",
+    "cargaHoraria": 64,
+    "estado": "suspendida"
+}
+
+### 12 y 13. Modificar nombre, descripción, carga horaria y estado
+PUT http://localhost:3000/materias/PRG1
+Content-Type: application/json
+
+{
+    "codigo": "PRG1",
+    "nombre": "Programación I (Plan 2024)",
+    "descripcion": "Algoritmos y estructuras básicas",
+    "cargaHoraria": 112,
+    "estado": "inactiva"
+}
+
+### 14. Modificar una materia inexistente
+PUT http://localhost:3000/materias/XYZ9
+Content-Type: application/json
+
+{
+    "codigo": "XYZ9",
+    "nombre": "No existe",
+    "cargaHoraria": 64,
+    "estado": "activa"
+}
+
+### 15. Cambiar el código por el de otra materia existente
+PUT http://localhost:3000/materias/PRG1
+Content-Type: application/json
+
+{
+    "codigo": "PRG4",
+    "nombre": "Programación I",
+    "cargaHoraria": 96,
+    "estado": "activa"
+}
+
+### 16. Eliminar una materia existente
+DELETE http://localhost:3000/materias/BD1
+
+### 16b. Consultarla nuevamente
+GET http://localhost:3000/materias/BD1
+
+### 17. Eliminar una materia inexistente
+DELETE http://localhost:3000/materias/XYZ9
+
+### 18. Verificar el listado final
+GET http://localhost:3000/materias
+
+
+###
+DELETE http://localhost:3000/materias/leg2
+

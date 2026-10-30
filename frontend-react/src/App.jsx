@@ -4,6 +4,7 @@ import Header from "./components/Header"
 import { Footer } from "./components/Footer"
 import Alumnos from "./page/Alumnos"
 import Docentes from "./page/Docentes"
+import Materias from "./page/Materias"
 import { FAQ } from "./page/FAQ"
 
 // Layout se reutiliza en todas las rutas hijas: el Outlet es el espacio variable.
@@ -31,6 +32,7 @@ function App() {
         {/* Cada path hija se presenta dentro del Outlet del Layout. */}
         <Route path="alumnos" element={<Alumnos />} />
         <Route path="docentes" element={<Docentes />} />
+        <Route path="materias" element={<Materias />} />
         <Route path="ayuda" element={<FAQ />} />
         {/* Cualquier dirección desconocida vuelve a la ruta principal. */}
         <Route path="*" element={<Navigate to="/" replace />} />
