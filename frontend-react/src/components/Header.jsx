@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom"
+import { NavLink, useNavigate } from "react-router-dom"
 import AppBar from "@mui/material/AppBar"
 import Toolbar from "@mui/material/Toolbar"
 import Typography from "@mui/material/Typography"
@@ -7,7 +7,10 @@ import IconButton from "@mui/material/IconButton"
 import Box from "@mui/material/Box"
 import HelpOutlineRoundedIcon from "@mui/icons-material/HelpOutlineRounded"
 import logo from "../assets/sga-logo.svg"
+import SelectorTema from "./SelectorTema"
+import { useAuth } from "../context/useAuth"
 
+// Opciones del menú: para sumar un módulo alcanza con agregar una línea.
 const enlaces = [
     { to: "/alumnos", texto: "Alumnos" },
     { to: "/docentes", texto: "Docentes" },
@@ -15,6 +18,15 @@ const enlaces = [
 ]
 
 export default function Header() {
+    const { cerrarSesion } = useAuth()
+    const navigate = useNavigate()
+
+    // Borra la sesión y vuelve al login.
+    const logout = () => {
+        cerrarSesion()
+        navigate("/login")
+    }
+
     return (
         <AppBar
             position="static"
@@ -47,6 +59,7 @@ export default function Header() {
                         </Typography>
                     </Box>
                 </Box>
+                {/* NavLink navega sin recargar y le agrega la clase active a la página actual. */}
                 <Box component="nav" sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
                     {enlaces.map(enlace => (
                         <Button
@@ -62,6 +75,10 @@ export default function Header() {
                     <IconButton component={NavLink} to="/ayuda" aria-label="Ayuda" color="primary">
                         <HelpOutlineRoundedIcon />
                     </IconButton>
+                    <Button type="button" color="inherit" variant="outlined" onClick={logout}>
+                        Cerrar sesión
+                    </Button>
+                    <SelectorTema />
                 </Box>
             </Toolbar>
         </AppBar>

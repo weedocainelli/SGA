@@ -6,6 +6,7 @@ import { BrowserRouter } from 'react-router-dom'
 import './index.css'
 import App from './App.jsx'
 import tema from './tema.js'
+import AuthProvider from './context/AuthProvider'
 
 // Busca en index.html el div id="root" y crea ahí el punto de montaje de React.
 createRoot(document.getElementById('root')).render(
@@ -17,8 +18,11 @@ createRoot(document.getElementById('root')).render(
       <CssBaseline />
       {/* BrowserRouter habilita las rutas sin recargar la página completa. */}
       <BrowserRouter>
-        {/* App contiene el layout y las páginas que se eligen según la URL. */}
-        <App />
+        {/* AuthProvider comparte el token y la sesión con toda la aplicación. */}
+        <AuthProvider>
+          {/* App contiene el layout y las páginas que se eligen según la URL. */}
+          <App />
+        </AuthProvider>
       </BrowserRouter>
     </ThemeProvider>
   </StrictMode>,

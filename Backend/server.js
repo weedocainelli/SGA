@@ -7,6 +7,7 @@ const conectarDB = require("./config/database")
 const alumnosRoutes = require("./routes/alumnos.routes") 
 const docentesRoutes = require("./routes/docentes.routes")
 const materiasRoutes = require("./routes/materias.routes")
+const authRoutes = require("./routes/authRoutes")
 
 const app = express() 
 
@@ -14,8 +15,10 @@ app.use(express.json())
 app.use(cors()) 
 app.use("/alumnos", alumnosRoutes) 
 app.use("/docentes", docentesRoutes)
+app.use("/auth", authRoutes)
 app.use("/materias", materiasRoutes)
 
+// Middleware de errores: Express lo reconoce por sus 4 parámetros. Evita mostrar la traza, por ejemplo ante un JSON mal formado.
 app.use((error, req, res, next) => {
     if (error.type === "entity.parse.failed") {
         return res.status(400).json({ mensaje: "El formato de los datos enviados no es válido" })
@@ -24,7 +27,7 @@ app.use((error, req, res, next) => {
     res.status(500).json({ mensaje: "Error interno del servidor" })
 })
 
-const PORT = process.env.PORT 
+const PORT = process.env.PORT || 3000
 
 conectarDB() 
 

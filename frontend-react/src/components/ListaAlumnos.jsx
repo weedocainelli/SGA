@@ -5,12 +5,14 @@ import Button from "@mui/material/Button"
 import Paper from "@mui/material/Paper"
 import Stack from "@mui/material/Stack"
 import Typography from "@mui/material/Typography"
+import { useAuth } from "../context/useAuth"
 const API_ALUMNOS = "http://localhost:3000/alumnos"
 
 export function ListaAlumnos({ actualizar, onAlumnoCreado, onEditarAlumno }) {
     // alumnos guarda el array descargado; los otros dos estados controlan la vista.
     const [alumnos, setAlumnos] = useState([])
     const [cargando, setCargando] = useState(true)
+    const { token } = useAuth()
     const [error, setError] = useState("")
 
     async function eliminarAlumno(legajo) {
@@ -22,7 +24,8 @@ export function ListaAlumnos({ actualizar, onAlumnoCreado, onEditarAlumno }) {
         try {
             // DELETE identifica el alumno usando su legajo en la URL.
             const respuesta = await fetch(`${API_ALUMNOS}/${legajo}`, {
-                method: "DELETE"
+                method: "DELETE",
+                headers: { Authorization: `Bearer ${token}` }
             })
 
             if (!respuesta.ok) {
@@ -47,7 +50,9 @@ export function ListaAlumnos({ actualizar, onAlumnoCreado, onEditarAlumno }) {
 
             try {
             // GET obtiene la lista actual desde el backend.
-            const respuesta = await fetch(API_ALUMNOS)
+            const respuesta = await fetch(API_ALUMNOS, {
+                headers: { Authorization: `Bearer ${token}` }
+            })
 
             if (!respuesta.ok){
                 // fetch no considera 404/500 como error de red; se verifica status.

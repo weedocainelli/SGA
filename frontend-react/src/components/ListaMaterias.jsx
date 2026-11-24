@@ -8,12 +8,14 @@ import Stack from "@mui/material/Stack"
 import Typography from "@mui/material/Typography"
 const API_MATERIAS = "http://localhost:3000/materias"
 
+// Muestra las materias y permite editarlas o eliminarlas.
 export function ListaMaterias({ actualizar, onMateriaEliminada, onEditarMateria }) {
     const [materias, setMaterias] = useState([])
     const [cargando, setCargando] = useState(true)
     const [error, setError] = useState("")
     const [errorEliminar, setErrorEliminar] = useState("")
 
+    // Pide confirmación, envía el DELETE con el código y avisa a la página.
     async function eliminarMateria(codigo) {
         const confirmar = window.confirm(`¿Está seguro de eliminar la materia ${codigo}?`)
         if (!confirmar) return
@@ -31,7 +33,7 @@ export function ListaMaterias({ actualizar, onMateriaEliminada, onEditarMateria 
                 )
             }
 
-            onMateriaEliminada("Materia eliminada correctamente")
+            onMateriaEliminada(codigo, "Materia eliminada correctamente")
         } catch (error) {
             console.error("Error al eliminar la materia", error)
             setErrorEliminar(error instanceof TypeError
@@ -40,6 +42,7 @@ export function ListaMaterias({ actualizar, onMateriaEliminada, onEditarMateria 
         }
     }
 
+    // Pide las materias al mostrarse el componente y cada vez que cambia actualizar.
     useEffect(() => {
         async function cargarMaterias(){
             setCargando(true)
@@ -64,6 +67,7 @@ export function ListaMaterias({ actualizar, onMateriaEliminada, onEditarMateria 
         cargarMaterias()
     }, [actualizar])
 
+    // Vistas alternativas: mientras carga o si falló la conexión.
     if (cargando) {
         return (
             <Paper
@@ -104,6 +108,7 @@ export function ListaMaterias({ actualizar, onMateriaEliminada, onEditarMateria 
                     {errorEliminar}
                 </Alert>
             )}
+            {/* Si no hay materias lo informa; si hay, crea una fila por cada una. */}
             {materias.length === 0
                 ? (
                     <Box
@@ -135,6 +140,7 @@ export function ListaMaterias({ actualizar, onMateriaEliminada, onEditarMateria 
                         {materias.map(materia => (
                             <Paper
                                 component="li"
+                                // El código es único, por eso identifica cada fila.
                                 key={materia.codigo}
                                 variant="outlined"
                                 sx={{

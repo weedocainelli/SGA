@@ -5,6 +5,7 @@ import Box from "@mui/material/Box"
 import Paper from "@mui/material/Paper"
 import Stack from "@mui/material/Stack"
 import Typography from "@mui/material/Typography"
+import { useAuth } from "../context/useAuth"
 // Dirección del endpoint de alumnos que expone el backend.
 const API_ALUMNOS = "http://localhost:3000/alumnos"
 
@@ -21,6 +22,7 @@ function FormularioA({ onAlumnoCreado, alumnoEditar, onCancelar }) {
     // error guarda el mensaje para la alerta; guardando bloquea envíos repetidos.
     const [error, setError] = useState("")
     const [guardando, setGuardando] = useState(false)
+    const { token } = useAuth()
 
     function manejarCambio(e) {
         // e es el evento del input; target es el input que disparó el cambio.
@@ -58,7 +60,10 @@ function FormularioA({ onAlumnoCreado, alumnoEditar, onCancelar }) {
                 // El servidor decide entre actualización y creación por el método HTTP.
                 method: editando ? "PUT" : "POST",
                 // Informa al middleware express.json() que el cuerpo tiene formato JSON.
-                headers: {"Content-Type":"application/json"},
+                headers: {
+                    "Content-Type":"application/json",
+                    Authorization: `Bearer ${token}`
+                },
                 // Convierte el objeto de JavaScript a texto JSON para enviarlo por HTTP.
                 body: JSON.stringify(alumno)
             })

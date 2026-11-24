@@ -4,8 +4,11 @@ import Header from "./components/Header"
 import { Footer } from "./components/Footer"
 import Alumnos from "./page/Alumnos"
 import Docentes from "./page/Docentes"
+// Página del módulo Materias.
 import Materias from "./page/Materias"
 import { FAQ } from "./page/FAQ"
+import Login from "./page/Login"
+import RutaProtegida from "./components/RutaProtegida"
 
 // Layout se reutiliza en todas las rutas hijas: el Outlet es el espacio variable.
 function Layout() {
@@ -25,17 +28,23 @@ function App() {
   // Routes compara la URL actual con sus Route y muestra la que coincide.
   return (
     <Routes>
-      {/* Las rutas internas comparten Layout. */}
-      <Route path="/" element={<Layout />}>
-        {/* La ruta raíz lleva a la página de alumnos sin agregar otro historial. */}
-        <Route index element={<Navigate to="alumnos" replace />} />
-        {/* Cada path hija se presenta dentro del Outlet del Layout. */}
-        <Route path="alumnos" element={<Alumnos />} />
-        <Route path="docentes" element={<Docentes />} />
-        <Route path="materias" element={<Materias />} />
-        <Route path="ayuda" element={<FAQ />} />
-        {/* Cualquier dirección desconocida vuelve a la ruta principal. */}
-        <Route path="*" element={<Navigate to="/" replace />} />
+      {/* El login queda fuera del Layout: ocupa toda la pantalla, sin encabezado ni pie. */}
+      <Route path="login" element={<Login />} />
+      {/* Todo lo que está adentro de RutaProtegida requiere haber iniciado sesión. */}
+      <Route element={<RutaProtegida />}>
+        {/* Las rutas internas comparten Layout. */}
+        <Route path="/" element={<Layout />}>
+          {/* La ruta raíz lleva a la página de alumnos sin agregar otro historial. */}
+          <Route index element={<Navigate to="alumnos" replace />} />
+          {/* Cada path hija se presenta dentro del Outlet del Layout. */}
+          <Route path="alumnos" element={<Alumnos />} />
+          <Route path="docentes" element={<Docentes />} />
+          {/* Ruta hija del Layout: se muestra dentro del Outlet y conserva encabezado y pie. */}
+          <Route path="materias" element={<Materias />} />
+          <Route path="ayuda" element={<FAQ />} />
+          {/* Cualquier dirección desconocida vuelve a la ruta principal. */}
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Route>
       </Route>
     </Routes>
   )

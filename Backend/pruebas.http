@@ -113,6 +113,17 @@ Content-Type: application/json
     "estado": "activa"
 }
 
+### 6b. Registrar con un código sin letras
+POST http://localhost:3000/materias
+Content-Type: application/json
+
+{
+    "codigo": "123",
+    "nombre": "Matemática",
+    "cargaHoraria": 64,
+    "estado": "activa"
+}
+
 ### 7. Registrar sin nombre
 POST http://localhost:3000/materias
 Content-Type: application/json
@@ -239,3 +250,15 @@ GET http://localhost:3000/materias
 ###
 DELETE http://localhost:3000/materias/leg2
 
+###
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{
+    "email": "mati@gmail.com",
+    "password": "password123"
+}
+
+###
+GET http://localhost:3000/alumnos
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhZThkNzMxYzQyMzExMWZhMTA1MGJlNSIsInJvbCI6ImFkbWluIiwiaWF0IjoxNzk0NTA3NTI4LCJleHAiOjE3OTQ1MTQ3Mjh9.tnbxxWrdxNavLNVkmR5x2YpibYGlVC-fGOsY5e3EmHU
